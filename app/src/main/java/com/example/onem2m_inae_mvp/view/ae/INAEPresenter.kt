@@ -11,10 +11,6 @@ class INAEPresenter(
 
     }
 
-    override fun start() {
-
-    }
-
     override suspend fun <T> handle(call: suspend () -> T): T? {
         try {
             return call.invoke()
