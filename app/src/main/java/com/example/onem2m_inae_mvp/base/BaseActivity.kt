@@ -6,7 +6,7 @@ import androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
-class BaseActivity: AppCompatActivity() {
+open class BaseActivity: AppCompatActivity() {
     protected fun <VB: ViewDataBinding> binding(@LayoutRes resId: Int): Lazy<VB> =
         lazy { DataBindingUtil.setContentView<VB>(this, resId) }
 }

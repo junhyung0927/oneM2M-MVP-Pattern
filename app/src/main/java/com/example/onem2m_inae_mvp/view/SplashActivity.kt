@@ -1,9 +1,10 @@
-package com.example.onem2m_inae_mvp
+package com.example.onem2m_inae_mvp.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.onem2m_inae_mvp.R
+import com.example.onem2m_inae_mvp.view.ae.INAEActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

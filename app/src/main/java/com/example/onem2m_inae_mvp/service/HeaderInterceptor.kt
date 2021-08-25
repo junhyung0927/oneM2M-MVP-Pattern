@@ -1,4 +1,4 @@
-package com.example.onem2m_inae_mvp.util
+package com.example.onem2m_inae_mvp.service
 
 import okhttp3.Interceptor
 import okhttp3.Response

@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/FullScreenTheme">
 
-        <activity android:name=".SplashActivity"
+        <activity android:name=".view.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".INAEActivity">
+        <activity android:name=".view.ae.INAEActivity">
         </activity>
 
         <service android:name="org.eclipse.paho.android.service.MqttService" />
