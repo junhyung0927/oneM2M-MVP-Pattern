@@ -1,4 +1,8 @@
 package com.example.onem2m_inae_mvp.data.local
 
-class INAELocalDataSource {
+import com.example.onem2m_inae_mvp.data.room.INAEDao
+
+class INAELocalDataSource(
+    private val inAEDao: INAEDao
+): LocalDataSource {
 }
