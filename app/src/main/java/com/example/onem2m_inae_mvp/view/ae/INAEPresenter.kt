@@ -1,15 +1,17 @@
 package com.example.onem2m_inae_mvp.view.ae
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.liveData
 import com.example.onem2m_inae_mvp.repository.INAERepository
+import kotlinx.coroutines.runBlocking
 import retrofit2.HttpException
 
 class INAEPresenter(
-    private val inaeRepository: INAERepository,
-    private val inaeView: INAEContract.View
-    ): INAEContract.Presenter {
-    override suspend fun createAE() {
+    private val inAERepository: INAERepository,
+    private val inAEView: INAEContract.View
+): INAEContract.Presenter {
 
-    }
 
     override suspend fun <T> handle(call: suspend () -> T): T? {
         try {
@@ -34,6 +36,11 @@ class INAEPresenter(
             else -> e.printStackTrace()
         }
     }
+
+    override fun createAE() = runBlocking {
+        inAERepository.createAE()
+    }
+
 
 
 }
