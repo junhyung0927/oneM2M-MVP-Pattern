@@ -34,6 +34,9 @@ android {
         //noinspection DataBindingWithoutKapt
         enabled = true
     }
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {

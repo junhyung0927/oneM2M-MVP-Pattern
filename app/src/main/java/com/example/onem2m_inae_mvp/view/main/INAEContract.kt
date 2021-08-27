@@ -1,9 +1,6 @@
-package com.example.onem2m_inae_mvp.view.ae
+package com.example.onem2m_inae_mvp.view.main
 
-import androidx.lifecycle.LiveData
-import com.example.onem2m_in_ae.model.request.RequestAE
 import com.example.onem2m_in_ae.model.response.ResponseAE
-import com.example.onem2m_inae_mvp.base.BasePresenter
 import com.example.onem2m_inae_mvp.base.BaseView
 import kotlinx.coroutines.Job
 

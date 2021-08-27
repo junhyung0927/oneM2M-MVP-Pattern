@@ -1,6 +1,5 @@
-package com.example.onem2m_inae_mvp.view.ae
+package com.example.onem2m_inae_mvp.view.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.onem2m_in_ae.model.response.ResponseAE
 import com.example.onem2m_inae_mvp.R
@@ -16,9 +15,12 @@ class INAEActivity : BaseActivity(), INAEContract.View {
         const val KEY_CONTAINER_DATA: String = "containerItem"
         var APP_ID: String= ""
     }
+
+    override val layoutId: Int
+        get() = R.layout.activity_main
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(layoutId)
 
         presenter.apply {
             createAE()

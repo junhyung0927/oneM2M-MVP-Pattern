@@ -1,4 +1,4 @@
-package com.example.onem2m_inae_mvp.view.ae
+package com.example.onem2m_inae_mvp.view.main
 
 import com.example.onem2m_inae_mvp.base.BasePresenter
 import com.example.onem2m_inae_mvp.repository.INAERepository

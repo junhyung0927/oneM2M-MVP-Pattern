@@ -24,8 +24,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.ae.INAEActivity">
-        </activity>
+        <activity android:name=".view.main.INAEActivity"/>
+        <activity android:name=".view.register.ContainerRegisterActivity" />
 
         <service android:name="org.eclipse.paho.android.service.MqttService" />
     </application>
