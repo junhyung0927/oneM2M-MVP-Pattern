@@ -34,8 +34,10 @@ class INAEActivity : BaseActivity<ActivityMainBinding>(), INAEContract.View {
             getAEInfo()
         }
 
-        binding.floatingButtonAddContainerINAEActivity.setOnClickListener {
-            startActivity(Intent(this, ContainerRegisterActivity::class.java))
+        binding.apply {
+            floatingButtonAddContainerINAEActivity.setOnClickListener {
+                startActivity(Intent(this@INAEActivity, ContainerRegisterActivity::class.java))
+            }
         }
     }
 

@@ -5,14 +5,21 @@ import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContract
 import com.example.onem2m_in_ae.model.ContainerType
 import com.example.onem2m_inae_mvp.R
 import com.example.onem2m_inae_mvp.base.BaseActivity
 import com.example.onem2m_inae_mvp.databinding.ActivityContainerRegisterBinding
+import com.example.onem2m_inae_mvp.view.main.INAEContract
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
-class ContainerRegisterActivity() : BaseActivity<ActivityContainerRegisterBinding>(), ContainerRegisterContract.View {
+class ContainerRegisterActivity() : BaseActivity<ActivityContainerRegisterBinding>(),
+    ContainerRegisterContract.View {
+    private val presenter: ContainerRegisterContract.Presenter by inject { parametersOf(this) }
+
     companion object {
         private var pos: Int = -1
         private val containerType = listOf(
@@ -30,16 +37,17 @@ class ContainerRegisterActivity() : BaseActivity<ActivityContainerRegisterBindin
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layoutId)
 
+        addTextChange()
+        spinnerCreateFromResource()
     }
 
-    override fun addTextChange() {
+    private fun addTextChange() {
         binding.apply {
-            textInputEditContainerNameRegisterActivity.addTextChangedListener(object: TextWatcher {
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
+            textInputEditContainerNameRegisterActivity.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
                 override fun afterTextChanged(p0: Editable?) {
                     if (textInputEditContainerNameRegisterActivity.text!!.isEmpty()) {
@@ -49,6 +57,17 @@ class ContainerRegisterActivity() : BaseActivity<ActivityContainerRegisterBindin
                     }
                 }
             })
+        }
+    }
+
+    private fun spinnerCreateFromResource() {
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.container_list,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spinnerContainerImageSelectRegisterActivity.adapter = adapter
         }
     }
 
