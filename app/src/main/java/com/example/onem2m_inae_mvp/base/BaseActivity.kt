@@ -13,6 +13,7 @@ abstract class BaseActivity<VB: ViewBinding>: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = inflateLayout(layoutInflater)
+        setContentView(binding.root)
     }
 
     abstract fun inflateLayout(layoutInflater: LayoutInflater): VB
@@ -20,7 +21,7 @@ abstract class BaseActivity<VB: ViewBinding>: AppCompatActivity() {
     abstract val layoutId: Int
 
     override fun onDestroy() {
-        super.onDestroy()
         presenter.onClear()
+        super.onDestroy()
     }
 }

@@ -18,13 +18,16 @@
 
         <activity android:name=".view.SplashActivity"
             android:exported="true">
+        </activity>
+
+        <activity android:name=".view.main.INAEActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.main.INAEActivity"/>
         <activity android:name=".view.register.ContainerRegisterActivity" />
 
         <service android:name="org.eclipse.paho.android.service.MqttService" />
