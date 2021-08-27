@@ -2,6 +2,7 @@ package com.example.onem2m_inae_mvp.view.ae
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.onem2m_in_ae.model.response.ResponseAE
 import com.example.onem2m_inae_mvp.R
 import com.example.onem2m_inae_mvp.base.BaseActivity
 import org.koin.android.ext.android.inject
@@ -15,6 +16,15 @@ class INAEActivity : BaseActivity(), INAEContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        presenter.createAE()
+        presenter.apply {
+            createAE()
+            getAEInfo()
+        }
     }
+
+    override fun showAEInfo(aeInfo: ResponseAE) {
+        println("테스트: ${aeInfo.m2m_ae.aei}")
+    }
+
+
 }

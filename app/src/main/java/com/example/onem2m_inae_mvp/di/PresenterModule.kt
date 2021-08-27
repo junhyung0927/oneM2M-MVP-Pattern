@@ -1,6 +1,7 @@
 package com.example.onem2m_inae_mvp.di
 
 import com.example.onem2m_inae_mvp.repository.INAERepository
+import com.example.onem2m_inae_mvp.view.ae.INAEActivity
 import com.example.onem2m_inae_mvp.view.ae.INAEContract
 import com.example.onem2m_inae_mvp.view.ae.INAEPresenter
 import org.koin.dsl.module
