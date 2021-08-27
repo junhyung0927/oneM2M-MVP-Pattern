@@ -12,6 +12,10 @@ import org.koin.core.parameter.parametersOf
 class INAEActivity : BaseActivity(), INAEContract.View {
     private val presenter: INAEContract.Presenter by inject { parametersOf(this) }
 
+    companion object {
+        const val KEY_CONTAINER_DATA: String = "containerItem"
+        var APP_ID: String= ""
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,8 +26,8 @@ class INAEActivity : BaseActivity(), INAEContract.View {
         }
     }
 
-    override fun showAEInfo(aeInfo: ResponseAE) {
-        println("테스트: ${aeInfo.m2m_ae.aei}")
+    override fun getAppId(aeInfo: ResponseAE) {
+        APP_ID = aeInfo.m2m_ae.aei
     }
 
 

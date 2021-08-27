@@ -11,7 +11,7 @@ interface INAEContract {
     //view - presenter 연결 view 구현 / presenter 호출
     interface View: BaseView<Presenter> {
         //view와 관련된 함수들
-        fun showAEInfo(aeInfo: ResponseAE)
+        fun getAppId(aeInfo: ResponseAE)
     }
 
     //view - presenter 연결 , presenter 구현 / view 호출

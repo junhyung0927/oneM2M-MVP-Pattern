@@ -1,15 +1,8 @@
 package com.example.onem2m_inae_mvp.view.ae
 
-import android.view.View
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
 import com.example.onem2m_inae_mvp.base.BasePresenter
 import com.example.onem2m_inae_mvp.repository.INAERepository
-import com.example.onem2m_inae_mvp.view.adapter.AdapterContract
 import kotlinx.coroutines.*
-import retrofit2.HttpException
-import kotlin.coroutines.CoroutineContext
 
 class INAEPresenter(
     private val inAERepository: INAERepository,
@@ -24,7 +17,7 @@ class INAEPresenter(
     override fun getAEInfo() = launch {
         withContext(Dispatchers.IO) {
             handle { inAERepository.getAEInfo() }?.let {
-                inAEView.showAEInfo(it)
+                inAEView.getAppId(it)
             }
         }
     }
