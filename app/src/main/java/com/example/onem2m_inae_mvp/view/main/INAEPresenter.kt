@@ -1,5 +1,6 @@
 package com.example.onem2m_inae_mvp.view.main
 
+import com.example.onem2m_in_ae.model.ContainerInstance
 import com.example.onem2m_inae_mvp.base.BasePresenter
 import com.example.onem2m_inae_mvp.repository.INAERepository
 import kotlinx.coroutines.*
@@ -21,4 +22,13 @@ class INAEPresenter(
             }
         }
     }
+
+    override fun getContainerDatabase() = launch {
+        withContext(Dispatchers.IO) {
+            handle { inAERepository.getContentInstanceDatabase() }?.let {
+                inAEView.getDatabase(it)
+            }
+        }
+    }
+
 }

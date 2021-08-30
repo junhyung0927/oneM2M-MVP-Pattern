@@ -3,6 +3,7 @@ package com.example.onem2m_inae_mvp.view.main
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import com.example.onem2m_in_ae.model.ContainerInstance
 import com.example.onem2m_in_ae.model.response.ResponseAE
 import com.example.onem2m_inae_mvp.R
 import com.example.onem2m_inae_mvp.base.BaseActivity
@@ -32,6 +33,7 @@ class INAEActivity : BaseActivity<ActivityMainBinding>(), INAEContract.View {
         presenter.apply {
             createAE()
             getAEInfo()
+            getContainerDatabase()
         }
 
         binding.apply {
@@ -43,5 +45,9 @@ class INAEActivity : BaseActivity<ActivityMainBinding>(), INAEContract.View {
 
     override fun getAppId(aeInfo: ResponseAE) {
         APP_ID = aeInfo.m2m_ae.aei
+    }
+
+    override fun getDatabase(containerDatabase: List<ContainerInstance>) {
+        println("테스트: ${containerDatabase}")
     }
 }

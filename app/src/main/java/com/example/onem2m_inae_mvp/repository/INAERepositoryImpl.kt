@@ -1,5 +1,7 @@
 package com.example.onem2m_inae_mvp.repository
 
+import com.example.onem2m_in_ae.model.ContainerInstance
+import com.example.onem2m_in_ae.model.ContainerType
 import com.example.onem2m_in_ae.model.request.RequestAE
 import com.example.onem2m_in_ae.model.request.RequestM2mAE
 import com.example.onem2m_in_ae.model.response.ResponseAE
@@ -26,7 +28,27 @@ class INAERepositoryImpl(
         return remoteDataSource.createAE(requestAE)
     }
 
+    override suspend fun registerContainerInstance(
+        containerName: String,
+        containerImage: Int,
+        containerType: ContainerType
+    ) {
+        val containerInstance = listOf(
+            ContainerInstance(
+                containerInstanceName = containerName,
+                containerImage = containerImage,
+                type = containerType
+            )
+        )
+
+        return localDataSource.registerContainerInstance(containerInstance)
+    }
+
     override suspend fun getAEInfo(): ResponseAE {
         return remoteDataSource.getAEInfo()
+    }
+
+    override suspend fun getContentInstanceDatabase(): List<ContainerInstance> {
+        return localDataSource.getContainerInstanceDataBase()
     }
 }

@@ -1,5 +1,6 @@
 package com.example.onem2m_inae_mvp.view.register
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.text.Editable
@@ -15,6 +16,7 @@ import com.example.onem2m_inae_mvp.R
 import com.example.onem2m_inae_mvp.base.BaseActivity
 import com.example.onem2m_inae_mvp.databinding.ActivityContainerRegisterBinding
 import com.example.onem2m_inae_mvp.util.setContainerImageId
+import com.example.onem2m_inae_mvp.view.main.INAEActivity
 import com.example.onem2m_inae_mvp.view.main.INAEContract
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
@@ -26,6 +28,7 @@ class ContainerRegisterActivity() : BaseActivity<ActivityContainerRegisterBindin
 
     companion object {
         private var pos: Int = -1
+        private var containerImage = 0
         private val containerType = listOf(
             ContainerType.AIRCONDITIONAL,
             ContainerType.AIRPURIFIER,
@@ -45,6 +48,7 @@ class ContainerRegisterActivity() : BaseActivity<ActivityContainerRegisterBindin
         addTextChange()
         spinnerCreateFromResource()
         spinnerItemSelected()
+        addRegisterContainer()
     }
 
     private fun addTextChange() {
@@ -82,6 +86,8 @@ class ContainerRegisterActivity() : BaseActivity<ActivityContainerRegisterBindin
                 object: AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
                     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, id: Long) {
                         imageViewContainerImageRegisterActivity.setImageResource(containerType.get(position).resId)
+                        containerImage = containerType.get(position).resId
+                        pos = position
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) { }
@@ -92,4 +98,22 @@ class ContainerRegisterActivity() : BaseActivity<ActivityContainerRegisterBindin
         }
     }
 
+    private fun addRegisterContainer() {
+        binding.apply {
+            buttonContainerAddRegisterActivity.setOnClickListener {
+                presenter.apply {
+                    registerContainer(
+                        containerImage,
+                        binding.textInputEditContainerNameRegisterActivity.text.toString(),
+                        containerType.get(pos)
+                    )
+                }
+            }
+        }
+    }
+
+
+    override fun showINAEActivity() {
+        startActivity(Intent(this,  INAEActivity::class.java))
+    }
 }
