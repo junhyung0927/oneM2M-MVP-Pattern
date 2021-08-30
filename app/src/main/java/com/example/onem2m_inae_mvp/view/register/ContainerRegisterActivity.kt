@@ -5,6 +5,8 @@ import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContract
@@ -12,9 +14,11 @@ import com.example.onem2m_in_ae.model.ContainerType
 import com.example.onem2m_inae_mvp.R
 import com.example.onem2m_inae_mvp.base.BaseActivity
 import com.example.onem2m_inae_mvp.databinding.ActivityContainerRegisterBinding
+import com.example.onem2m_inae_mvp.util.setContainerImageId
 import com.example.onem2m_inae_mvp.view.main.INAEContract
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
+import java.text.FieldPosition
 
 class ContainerRegisterActivity() : BaseActivity<ActivityContainerRegisterBinding>(),
     ContainerRegisterContract.View {
@@ -40,6 +44,7 @@ class ContainerRegisterActivity() : BaseActivity<ActivityContainerRegisterBindin
 
         addTextChange()
         spinnerCreateFromResource()
+        spinnerItemSelected()
     }
 
     private fun addTextChange() {
@@ -68,6 +73,22 @@ class ContainerRegisterActivity() : BaseActivity<ActivityContainerRegisterBindin
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spinnerContainerImageSelectRegisterActivity.adapter = adapter
+        }
+    }
+
+    private fun spinnerItemSelected() {
+        binding.apply {
+            spinnerContainerImageSelectRegisterActivity.onItemSelectedListener =
+                object: AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
+                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, id: Long) {
+                        imageViewContainerImageRegisterActivity.setImageResource(containerType.get(position).resId)
+                    }
+
+                    override fun onNothingSelected(p0: AdapterView<*>?) { }
+
+                    override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) { }
+
+                }
         }
     }
 
