@@ -20,6 +20,6 @@ interface INAEContract {
     interface Presenter {
         fun createAE(): Job
         fun getAEInfo(): Job
-        fun getContainerDatabase(): Job
+        fun getContainerDatabase(isClear: Boolean): Job
     }
 }

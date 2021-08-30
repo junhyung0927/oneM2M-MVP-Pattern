@@ -9,12 +9,12 @@ import com.example.onem2m_inae_mvp.view.register.ContainerRegisterPresenter
 import org.koin.dsl.module
 
 val presenterModule = module {
-    factory { (view: INAEContract.View) ->
+    factory { (view: INAEContract.View, model: ContainerRecyclerViewAdapter, adapterView: ContainerRecyclerViewAdapter)->
         INAEPresenter(
             inAERepository = get(),
             view,
-            adapterModel = ContainerRecyclerViewAdapter(),
-            adapterView = ContainerRecyclerViewAdapter()
+            model,
+            adapterView
         )
     }
 

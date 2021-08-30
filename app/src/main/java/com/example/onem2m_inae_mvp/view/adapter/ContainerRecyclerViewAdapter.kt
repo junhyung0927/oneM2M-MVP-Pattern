@@ -1,6 +1,7 @@
 package com.example.onem2m_inae_mvp.view.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -8,14 +9,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.onem2m_in_ae.model.ContainerInstance
 import com.example.onem2m_inae_mvp.databinding.ItemContainerBinding
-import com.example.onem2m_inae_mvp.view.adapter.ContainerRecyclerViewAdapter.*
 
 class ContainerRecyclerViewAdapter :
-    ListAdapter<ContainerInstance, ContainerViewHolder>(
+    ListAdapter<ContainerInstance, ContainerRecyclerViewAdapter.ContainerViewHolder>(
         DIFF_CALLBACK
     ),
     AdapterContract.View, AdapterContract.Model {
+
     private var instanceList = listOf<ContainerInstance>()
+
+    init {
+        println("테스트: 초기화")
+    }
 
     companion object {
         val DIFF_CALLBACK = object :
@@ -24,6 +29,7 @@ class ContainerRecyclerViewAdapter :
                 oldItem: ContainerInstance,
                 newItem: ContainerInstance
             ): Boolean {
+                println("테스트: DiffUtil")
                 return oldItem.id == newItem.id
             }
 
@@ -31,6 +37,7 @@ class ContainerRecyclerViewAdapter :
                 oldItem: ContainerInstance,
                 newItem: ContainerInstance
             ): Boolean {
+                println("테스트: DiffUtil")
                 return oldItem == newItem
             }
         }
@@ -38,7 +45,12 @@ class ContainerRecyclerViewAdapter :
 
     override var onClickFunc: ((ContainerInstance) -> Unit)? = null
 
+    override fun notifyAdapter() {
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContainerViewHolder {
+        println("테스트: onCreateViewHolder")
         return ContainerViewHolder(
             ItemContainerBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
@@ -48,8 +60,9 @@ class ContainerRecyclerViewAdapter :
     }
 
     override fun onBindViewHolder(holder: ContainerViewHolder, position: Int) {
+        println("테스트: onBindviewHolder")
         holder.bind(
-            instanceList[position]
+            currentList[position]
         )
     }
 
@@ -60,6 +73,7 @@ class ContainerRecyclerViewAdapter :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: ContainerInstance) {
+            println("테스트: bind")
             binding.apply {
                 containerItemImageView.setImageResource(item.containerImage)
                 containerItemNameTextView.text = item.containerInstanceName
@@ -73,9 +87,14 @@ class ContainerRecyclerViewAdapter :
     @SuppressLint("NotifyDataSetChanged")
     override fun submitList(list: List<ContainerInstance>?) {
         super.submitList(list)
-        instanceList = list as List<ContainerInstance>
         notifyDataSetChanged()
     }
 
+    override fun addItems(imageItems: List<ContainerInstance>) {
 
+    }
+
+    override fun clearItem() {
+        currentList.clear()
+    }
 }

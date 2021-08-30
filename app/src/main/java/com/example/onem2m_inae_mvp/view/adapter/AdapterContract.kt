@@ -6,9 +6,12 @@ interface AdapterContract {
     interface View {
         var onClickFunc: ((ContainerInstance) -> Unit)?
 
+        fun notifyAdapter()
     }
 
     interface Model {
         fun submitList(list: List<ContainerInstance>?)
+        fun addItems(imageItems: List<ContainerInstance>)
+        fun clearItem()
     }
 }

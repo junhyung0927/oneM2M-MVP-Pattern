@@ -18,14 +18,14 @@ import org.koin.core.parameter.parametersOf
 
 //Activity만 있는 경우라도 별도의 View가 있다고 가정한다(코드 통일성)
 class INAEActivity : BaseActivity<ActivityMainBinding>(), INAEContract.View {
-    override val presenter: INAEPresenter by inject { parametersOf(this) }
+    override val presenter: INAEPresenter by inject { parametersOf(this, adapter, adapter) }
 
     //INAEContract.Presenter
     private val adapter by lazy { ContainerRecyclerViewAdapter() }
 
     companion object {
         const val KEY_CONTAINER_DATA: String = "containerItem"
-        var APP_ID: String= ""
+        var APP_ID: String = ""
     }
 
     override val layoutId: Int
@@ -40,12 +40,11 @@ class INAEActivity : BaseActivity<ActivityMainBinding>(), INAEContract.View {
         presenter.apply {
             createAE()
             getAEInfo()
-            getContainerDatabase()
+            getContainerDatabase(false)
         }
 
         binding.apply {
             viewpager2INAEActivity.adapter = adapter
-
             TabLayoutMediator(
                 tabLayoutINAEActivity,
                 viewpager2INAEActivity
@@ -67,6 +66,8 @@ class INAEActivity : BaseActivity<ActivityMainBinding>(), INAEContract.View {
             binding.apply {
                 explainTextViewINAEActivity.visibility = View.GONE
                 viewpager2INAEActivity.visibility = View.VISIBLE
+
+//                adapter.submitList(containerDatabase)
             }
         }
     }

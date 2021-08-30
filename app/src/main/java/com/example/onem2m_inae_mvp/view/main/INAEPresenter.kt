@@ -19,6 +19,7 @@ class INAEPresenter(
             onClickListener(it)
         }
     }
+
     override fun createAE() = launch {
         withContext(Dispatchers.IO) {
             handle { inAERepository.createAE() }
@@ -33,11 +34,16 @@ class INAEPresenter(
         }
     }
 
-    override fun getContainerDatabase() = launch {
-        withContext(Dispatchers.IO) {
+    override fun getContainerDatabase(isClear: Boolean) = launch {
+        withContext(Dispatchers.Main) {
             handle { inAERepository.getContentInstanceDatabase() }?.let {
                 inAEView.getDatabase(it)
+
+                if (isClear) {
+                    adapterModel.clearItem()
+                }
                 adapterModel.submitList(it)
+//                adapterView.notifyAdapter()
             }
         }
     }
