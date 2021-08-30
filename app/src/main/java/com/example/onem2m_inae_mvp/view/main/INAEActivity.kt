@@ -3,18 +3,25 @@ package com.example.onem2m_inae_mvp.view.main
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import com.example.onem2m_in_ae.model.ContainerInstance
 import com.example.onem2m_in_ae.model.response.ResponseAE
 import com.example.onem2m_inae_mvp.R
 import com.example.onem2m_inae_mvp.base.BaseActivity
+import com.example.onem2m_inae_mvp.base.BasePresenter
 import com.example.onem2m_inae_mvp.databinding.ActivityMainBinding
+import com.example.onem2m_inae_mvp.view.adapter.ContainerRecyclerViewAdapter
 import com.example.onem2m_inae_mvp.view.register.ContainerRegisterActivity
+import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
 //Activity만 있는 경우라도 별도의 View가 있다고 가정한다(코드 통일성)
 class INAEActivity : BaseActivity<ActivityMainBinding>(), INAEContract.View {
-    private val presenter: INAEContract.Presenter by inject { parametersOf(this) }
+    override val presenter: INAEPresenter by inject { parametersOf(this) }
+
+    //INAEContract.Presenter
+    private val adapter by lazy { ContainerRecyclerViewAdapter() }
 
     companion object {
         const val KEY_CONTAINER_DATA: String = "containerItem"
@@ -37,6 +44,13 @@ class INAEActivity : BaseActivity<ActivityMainBinding>(), INAEContract.View {
         }
 
         binding.apply {
+            viewpager2INAEActivity.adapter = adapter
+
+            TabLayoutMediator(
+                tabLayoutINAEActivity,
+                viewpager2INAEActivity
+            ) { tab, position -> }.attach()
+
             floatingButtonAddContainerINAEActivity.setOnClickListener {
                 startActivity(Intent(this@INAEActivity, ContainerRegisterActivity::class.java))
             }
@@ -49,5 +63,20 @@ class INAEActivity : BaseActivity<ActivityMainBinding>(), INAEContract.View {
 
     override fun getDatabase(containerDatabase: List<ContainerInstance>) {
         println("테스트: ${containerDatabase}")
+        if (containerDatabase.isNotEmpty()) {
+            binding.apply {
+                explainTextViewINAEActivity.visibility = View.GONE
+                viewpager2INAEActivity.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    override fun showSelectedContainerView(containerInstance: ContainerInstance) {
+        println(containerInstance)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
     }
 }

@@ -24,7 +24,7 @@ import java.text.FieldPosition
 
 class ContainerRegisterActivity() : BaseActivity<ActivityContainerRegisterBinding>(),
     ContainerRegisterContract.View {
-    private val presenter: ContainerRegisterContract.Presenter by inject { parametersOf(this) }
+    override val presenter: ContainerRegisterPresenter by inject { parametersOf(this) }
 
     companion object {
         private var pos: Int = -1

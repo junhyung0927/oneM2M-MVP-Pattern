@@ -1,7 +1,9 @@
 package com.example.onem2m_inae_mvp.view.main
 
+import android.widget.BaseExpandableListAdapter
 import com.example.onem2m_in_ae.model.ContainerInstance
 import com.example.onem2m_in_ae.model.response.ResponseAE
+import com.example.onem2m_inae_mvp.base.BasePresenter
 import com.example.onem2m_inae_mvp.base.BaseView
 import kotlinx.coroutines.Job
 
@@ -11,6 +13,7 @@ interface INAEContract {
         //view와 관련된 함수들
         fun getAppId(aeInfo: ResponseAE)
         fun getDatabase(containerDatabase: List<ContainerInstance>)
+        fun showSelectedContainerView(containerInstance: ContainerInstance)
     }
 
     //view - presenter 연결 , presenter 구현 / view 호출

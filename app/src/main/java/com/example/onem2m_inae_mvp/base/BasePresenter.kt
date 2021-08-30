@@ -27,7 +27,7 @@ abstract class BasePresenter : CoroutineScope {
         return null
     }
 
-    fun onError(e: Exception) {
+    private fun onError(e: Exception) {
         when (e) {
             is HttpException -> {
                 when (e.code()) {
