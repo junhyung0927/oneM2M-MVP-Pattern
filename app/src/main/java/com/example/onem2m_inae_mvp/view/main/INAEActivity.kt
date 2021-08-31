@@ -66,8 +66,6 @@ class INAEActivity : BaseActivity<ActivityMainBinding>(), INAEContract.View {
             binding.apply {
                 explainTextViewINAEActivity.visibility = View.GONE
                 viewpager2INAEActivity.visibility = View.VISIBLE
-
-//                adapter.submitList(containerDatabase)
             }
         }
     }

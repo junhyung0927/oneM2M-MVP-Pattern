@@ -5,8 +5,6 @@ import com.example.onem2m_in_ae.model.ContainerInstance
 interface AdapterContract {
     interface View {
         var onClickFunc: ((ContainerInstance) -> Unit)?
-
-        fun notifyAdapter()
     }
 
     interface Model {

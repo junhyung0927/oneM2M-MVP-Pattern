@@ -15,13 +15,6 @@ class ContainerRecyclerViewAdapter :
         DIFF_CALLBACK
     ),
     AdapterContract.View, AdapterContract.Model {
-
-    private var instanceList = listOf<ContainerInstance>()
-
-    init {
-        println("테스트: 초기화")
-    }
-
     companion object {
         val DIFF_CALLBACK = object :
             DiffUtil.ItemCallback<ContainerInstance>() {
@@ -29,7 +22,6 @@ class ContainerRecyclerViewAdapter :
                 oldItem: ContainerInstance,
                 newItem: ContainerInstance
             ): Boolean {
-                println("테스트: DiffUtil")
                 return oldItem.id == newItem.id
             }
 
@@ -37,7 +29,6 @@ class ContainerRecyclerViewAdapter :
                 oldItem: ContainerInstance,
                 newItem: ContainerInstance
             ): Boolean {
-                println("테스트: DiffUtil")
                 return oldItem == newItem
             }
         }
@@ -45,12 +36,7 @@ class ContainerRecyclerViewAdapter :
 
     override var onClickFunc: ((ContainerInstance) -> Unit)? = null
 
-    override fun notifyAdapter() {
-        notifyDataSetChanged()
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContainerViewHolder {
-        println("테스트: onCreateViewHolder")
         return ContainerViewHolder(
             ItemContainerBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
@@ -60,7 +46,6 @@ class ContainerRecyclerViewAdapter :
     }
 
     override fun onBindViewHolder(holder: ContainerViewHolder, position: Int) {
-        println("테스트: onBindviewHolder")
         holder.bind(
             currentList[position]
         )
@@ -73,7 +58,6 @@ class ContainerRecyclerViewAdapter :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: ContainerInstance) {
-            println("테스트: bind")
             binding.apply {
                 containerItemImageView.setImageResource(item.containerImage)
                 containerItemNameTextView.text = item.containerInstanceName

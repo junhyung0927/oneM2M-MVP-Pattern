@@ -13,6 +13,7 @@ class INAEPresenter(
     private val adapterModel: AdapterContract.Model,
     private val adapterView: AdapterContract.View
 ) : INAEContract.Presenter, BasePresenter() {
+    lateinit var containerInstanceList: List<ContainerInstance>
 
     init {
         adapterView.onClickFunc = {
@@ -35,17 +36,17 @@ class INAEPresenter(
     }
 
     override fun getContainerDatabase(isClear: Boolean) = launch {
-        withContext(Dispatchers.Main) {
+        withContext(Dispatchers.IO) {
             handle { inAERepository.getContentInstanceDatabase() }?.let {
                 inAEView.getDatabase(it)
 
                 if (isClear) {
                     adapterModel.clearItem()
                 }
-                adapterModel.submitList(it)
-//                adapterView.notifyAdapter()
+                containerInstanceList = it
             }
         }
+        adapterModel.submitList(containerInstanceList)
     }
 
     private fun onClickListener(containerInstance: ContainerInstance) {
