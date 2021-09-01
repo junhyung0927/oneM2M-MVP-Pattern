@@ -37,11 +37,12 @@
         android:layout_height="250dp"
         android:orientation="horizontal"
         android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintBottom_toTopOf="@id/photoView_search_ImageView_INAEActivity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/head_textView_INAEActivity"
-        tools:visibility="visible" />
+         />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout_INAEActivity"

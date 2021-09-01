@@ -5,9 +5,12 @@ import android.os.PersistableBundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
+import com.example.onem2m_inae_mvp.view.main.INAEContract
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
-abstract class BaseActivity<VB: ViewBinding>: AppCompatActivity() {
-    private lateinit var presenter: BasePresenter
+abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
+    abstract val presenter: BasePresenter
     protected lateinit var binding: VB
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +24,7 @@ abstract class BaseActivity<VB: ViewBinding>: AppCompatActivity() {
     abstract val layoutId: Int
 
     override fun onDestroy() {
-        presenter.onClear()
         super.onDestroy()
+        presenter.onClear()
     }
 }
