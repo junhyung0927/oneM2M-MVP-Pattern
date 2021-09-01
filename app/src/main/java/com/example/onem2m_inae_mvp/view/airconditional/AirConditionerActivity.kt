@@ -1,14 +1,18 @@
 package com.example.onem2m_inae_mvp.view.airconditional
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import com.example.onem2m_in_ae.model.ContainerInstance
+import com.example.onem2m_in_ae.model.ContentInstanceMqttData
+import com.example.onem2m_in_ae.model.response.ResponseCnt
 import com.example.onem2m_in_ae.model.response.ResponseCntUril
 import com.example.onem2m_inae_mvp.R
 import com.example.onem2m_inae_mvp.base.BaseActivity
 import com.example.onem2m_inae_mvp.databinding.ActivityAirconditionerBinding
 import com.example.onem2m_inae_mvp.service.mqtt.MqttManager
+import com.example.onem2m_inae_mvp.view.inae.INAEActivity
 import com.example.onem2m_inae_mvp.view.inae.INAEActivity.Companion.APP_ID
 import com.example.onem2m_inae_mvp.view.inae.INAEActivity.Companion.KEY_CONTAINER_DATA
 
@@ -21,14 +25,15 @@ class AirConditionerActivity : BaseActivity<ActivityAirconditionerBinding>(),
         MqttManager(applicationContext)
     }
 
+    companion object {
+        var containerResourceName = ""
+    }
+
     override val presenter: AirConditionerPresenter by inject { parametersOf(this, mqttManager) }
+
     private val containerItem by lazy {
         val intent = intent
         intent.getSerializableExtra(KEY_CONTAINER_DATA) as ContainerInstance
-    }
-
-    companion object {
-        var containerResourceName = ""
     }
 
     override val layoutId: Int
@@ -47,7 +52,7 @@ class AirConditionerActivity : BaseActivity<ActivityAirconditionerBinding>(),
         }
     }
 
-    override fun showMqttData(contentData: String) {
+    override fun showMqttData(contentData: ContentInstanceMqttData) {
         binding.apply {
             sensingDataLoadingAnimationAirConditionerActivity.visibility = View.GONE
             sensingDataTextViewAirConditionerActivity.visibility = View.VISIBLE
@@ -58,25 +63,53 @@ class AirConditionerActivity : BaseActivity<ActivityAirconditionerBinding>(),
             containerNameTextViewAirConditionerActivity.visibility = View.VISIBLE
             containerItemImageViewAirConditionerActivity.setImageResource(containerItem.containerImage)
 
-            sensingDataTextViewAirConditionerActivity.text = contentData
-
-            if (!it.con.equals("on") && !it.con.equals("off")) {
-                sensingDataTextViewAirConditionerActivity.text = it.con
+            containerNameTextViewAirConditionerActivity.text = containerItem.containerInstanceName
+            if (!contentData.con.equals("on") && !contentData.con.equals("off")) {
+                sensingDataTextViewAirConditionerActivity.text = contentData.con
             }
         }
     }
 
-    override fun getChildResourceInfo(responseCntUril: ResponseCntUril) {
+    override fun showChildResourceInfo(responseCntUril: ResponseCntUril) {
         containerResourceName = presenter.getResourceName(responseCntUril)
         presenter.apply {
             createSubscription(containerResourceName)
             connectMqtt(containerResourceName)
-
+            getContainerInfo()
         }
+    }
+
+    override fun controlContainer(responseCnt: ResponseCnt) {
+        binding.apply {
+            presenter.apply {
+                if (containerResourceName.isNotEmpty()) {
+                    airconditionerControlModeAppCompactToggleButton.setOnCheckedChangeListener { _, isChecked ->
+                        val content = if (isChecked) {
+                            "on"
+                        } else {
+                            "off"
+                        }
+                        deviceControl(content, containerResourceName)
+                    }
+                }
+                airconditionerSearchDataModeAppCompactButton.setOnClickListener {
+                    getContentInstanceInfo(containerResourceName)
+                }
+
+                airconditionerDeleteAppCompactToggleButton.setOnClickListener {
+                    deleteDatabaseContainer(containerItem.containerInstanceName)
+                }
+            }
+        }
+
     }
 
     override fun onStop() {
         mqttManager.unsubscribeToTopic(APP_ID, containerResourceName)
         super.onStop()
+    }
+
+    override fun showINAEActivity() {
+        startActivity(Intent(this, INAEActivity::class.java))
     }
 }

@@ -9,6 +9,7 @@ import com.example.onem2m_inae_mvp.service.mqtt.MqttManager
 import com.example.onem2m_inae_mvp.service.mqtt.MqttRepository
 import com.example.onem2m_inae_mvp.view.inae.INAEActivity.Companion.APP_ID
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
@@ -22,18 +23,13 @@ class AirConditionerPresenter(
     private val airConditionerView: AirConditionerContract.View,
     private val mqttManager: MqttManager
 ) : AirConditionerContract.Presenter, BasePresenter() {
-    lateinit var contentData: String
-
-    override fun getMqttData(contentData: String) {
-        airConditionerView.showMqttData(contentData)
-    }
 
     override fun getChildResourceInfo() = launch {
         withContext(Dispatchers.IO) {
             handle {
                 inAERepository.getChildResourceInfo()
             }?.let {
-                airConditionerView.getChildResourceInfo(it)
+                airConditionerView.showChildResourceInfo(it)
             }
         }
     }
@@ -44,6 +40,7 @@ class AirConditionerPresenter(
             .find { it.contains("tvoc") }!!
             .split("/").last()
     }
+
 
     override fun createSubscription(resourceName: String) = launch {
         withContext(Dispatchers.IO) {
@@ -67,7 +64,7 @@ class AirConditionerPresenter(
                         println("message arrived: ${message.toString()}")
 
                         val contentData = MqttRepository().parseMessage(message)
-                        airConditionerView.showMqttData(contentData.con)
+                        airConditionerView.showMqttData(contentData)
 
                         val retrqi = MqttClientRequestParser().notificationJsonParse(message.toString())
                         val responseMessage = MqttClientRequest().notificationResponse(retrqi)
@@ -91,7 +88,49 @@ class AirConditionerPresenter(
                 })
             }
         } catch (e: Exception) {
-
+            println("mqtt 접속 에러: ${e.toString()}")
         }
     }
+
+    override fun getContainerInfo() = launch {
+        withContext(Dispatchers.IO) {
+            handle {
+                inAERepository.getContainerInfo()
+            }?.let {
+                airConditionerView.controlContainer(it)
+            }
+        }
+    }
+
+    override fun getContentInstanceInfo(containerResourceName: String) = launch {
+        withContext(Dispatchers.IO) {
+            handle {
+                inAERepository.getContentInstanceInfo(containerResourceName)
+            }?.let {
+                println("장치 정보 가져오기")
+            }
+        }
+    }
+
+    override fun deviceControl(content: String, containerResourceName: String) = launch {
+        withContext(Dispatchers.IO) {
+            handle {
+                inAERepository.deviceControl(content, containerResourceName)
+            }?.let {
+                println("장치 제어 성공")
+            }
+        }
+    }
+
+    override fun deleteDatabaseContainer(containerInstanceName: String) = launch {
+        withContext(Dispatchers.IO) {
+            handle {
+                inAERepository.deleteDatabaseContainer(containerInstanceName)
+            }?.let {
+                println("장치 제거 성공")
+                airConditionerView.showINAEActivity()
+            }
+        }
+    }
+
 }
