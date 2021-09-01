@@ -1,8 +1,9 @@
 package com.example.onem2m_inae_mvp.di
 
+import com.example.onem2m_inae_mvp.service.mqtt.MqttManager
 import com.example.onem2m_inae_mvp.view.adapter.ContainerRecyclerViewAdapter
-import com.example.onem2m_inae_mvp.view.airconditional.AirConditionalContract
-import com.example.onem2m_inae_mvp.view.airconditional.AirConditionalPresenter
+import com.example.onem2m_inae_mvp.view.airconditional.AirConditionerContract
+import com.example.onem2m_inae_mvp.view.airconditional.AirConditionerPresenter
 import com.example.onem2m_inae_mvp.view.airpurifier.AirPurifierContract
 import com.example.onem2m_inae_mvp.view.airpurifier.AirPurifierPresenter
 import com.example.onem2m_inae_mvp.view.boiler.BoilerContract
@@ -27,8 +28,8 @@ val presenterModule = module {
         ContainerRegisterPresenter(inAERepository = get() , view)
     }
 
-    factory { (view: AirConditionalContract.View) ->
-        AirConditionalPresenter(inAERepository = get(), view)
+    factory { (view: AirConditionerContract.View, mqttManager: MqttManager) ->
+        AirConditionerPresenter(inAERepository = get(), view, mqttManager)
     }
 
     factory { (view: AirPurifierContract.View) ->
