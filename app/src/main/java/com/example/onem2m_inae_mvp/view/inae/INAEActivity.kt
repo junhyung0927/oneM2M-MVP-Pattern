@@ -11,7 +11,7 @@ import com.example.onem2m_inae_mvp.R
 import com.example.onem2m_inae_mvp.base.BaseActivity
 import com.example.onem2m_inae_mvp.databinding.ActivityMainBinding
 import com.example.onem2m_inae_mvp.view.adapter.ContainerRecyclerViewAdapter
-import com.example.onem2m_inae_mvp.view.airconditional.AirConditionalActivity
+import com.example.onem2m_inae_mvp.view.airconditional.AirConditionerActivity
 import com.example.onem2m_inae_mvp.view.airpurifier.AirPurifierActivity
 import com.example.onem2m_inae_mvp.view.boiler.BoilerActivity
 import com.example.onem2m_inae_mvp.view.register.ContainerRegisterActivity
@@ -75,7 +75,7 @@ class INAEActivity : BaseActivity<ActivityMainBinding>(), INAEContract.View {
 
     override fun showSelectedContainerView(containerInstance: ContainerInstance) {
         val destinationActivity = when (containerInstance.type) {
-            ContainerType.AIRCONDITIONAL -> AirConditionalActivity::class.java
+            ContainerType.AIRCONDITIONAL -> AirConditionerActivity::class.java
             ContainerType.AIRPURIFIER -> AirPurifierActivity::class.java
             else -> BoilerActivity::class.java
         }

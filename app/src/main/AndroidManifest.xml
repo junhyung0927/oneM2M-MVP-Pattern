@@ -30,7 +30,7 @@
 
         <activity android:name=".view.register.ContainerRegisterActivity" />
 
-        <activity android:name=".view.airconditional.AirConditionalActivity" />
+        <activity android:name=".view.airconditional.AirConditionerActivity" />
 
         <activity android:name=".view.airpurifier.AirPurifierActivity" />
 
