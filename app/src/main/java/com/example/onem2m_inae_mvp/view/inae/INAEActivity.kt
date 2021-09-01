@@ -1,16 +1,19 @@
-package com.example.onem2m_inae_mvp.view.main
+package com.example.onem2m_inae_mvp.view.inae
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import com.example.onem2m_in_ae.model.ContainerInstance
+import com.example.onem2m_in_ae.model.ContainerType
 import com.example.onem2m_in_ae.model.response.ResponseAE
 import com.example.onem2m_inae_mvp.R
 import com.example.onem2m_inae_mvp.base.BaseActivity
-import com.example.onem2m_inae_mvp.base.BasePresenter
 import com.example.onem2m_inae_mvp.databinding.ActivityMainBinding
 import com.example.onem2m_inae_mvp.view.adapter.ContainerRecyclerViewAdapter
+import com.example.onem2m_inae_mvp.view.airconditional.AirConditionalActivity
+import com.example.onem2m_inae_mvp.view.airpurifier.AirPurifierActivity
+import com.example.onem2m_inae_mvp.view.boiler.BoilerActivity
 import com.example.onem2m_inae_mvp.view.register.ContainerRegisterActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.android.ext.android.inject
@@ -71,11 +74,14 @@ class INAEActivity : BaseActivity<ActivityMainBinding>(), INAEContract.View {
     }
 
     override fun showSelectedContainerView(containerInstance: ContainerInstance) {
-        println(containerInstance)
-    }
+        val destinationActivity = when (containerInstance.type) {
+            ContainerType.AIRCONDITIONAL -> AirConditionalActivity::class.java
+            ContainerType.AIRPURIFIER -> AirPurifierActivity::class.java
+            else -> BoilerActivity::class.java
+        }
 
-    override fun onDestroy() {
-        super.onDestroy()
-
+        val intent = Intent(this@INAEActivity, destinationActivity)
+        intent.putExtra(KEY_CONTAINER_DATA, containerInstance)
+        startActivity(intent)
     }
 }

@@ -1,6 +1,5 @@
-package com.example.onem2m_inae_mvp.view.main
+package com.example.onem2m_inae_mvp.view.inae
 
-import android.widget.AdapterView
 import com.example.onem2m_in_ae.model.ContainerInstance
 import com.example.onem2m_inae_mvp.base.BasePresenter
 import com.example.onem2m_inae_mvp.repository.INAERepository

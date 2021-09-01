@@ -2,25 +2,19 @@ package com.example.onem2m_inae_mvp.view.register
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.TextView
-import androidx.activity.result.contract.ActivityResultContract
 import com.example.onem2m_in_ae.model.ContainerType
 import com.example.onem2m_inae_mvp.R
 import com.example.onem2m_inae_mvp.base.BaseActivity
 import com.example.onem2m_inae_mvp.databinding.ActivityContainerRegisterBinding
-import com.example.onem2m_inae_mvp.util.setContainerImageId
-import com.example.onem2m_inae_mvp.view.main.INAEActivity
-import com.example.onem2m_inae_mvp.view.main.INAEContract
+import com.example.onem2m_inae_mvp.view.inae.INAEActivity
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
-import java.text.FieldPosition
 
 class ContainerRegisterActivity() : BaseActivity<ActivityContainerRegisterBinding>(),
     ContainerRegisterContract.View {

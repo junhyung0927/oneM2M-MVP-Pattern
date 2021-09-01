@@ -3,7 +3,6 @@ package com.example.onem2m_inae_mvp.view.register
 import com.example.onem2m_in_ae.model.ContainerType
 import com.example.onem2m_inae_mvp.base.BasePresenter
 import com.example.onem2m_inae_mvp.repository.INAERepository
-import com.example.onem2m_inae_mvp.view.main.INAEContract
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
