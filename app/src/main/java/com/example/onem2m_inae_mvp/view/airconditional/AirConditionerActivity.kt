@@ -15,11 +15,16 @@ import com.example.onem2m_inae_mvp.view.inae.INAEActivity.Companion.KEY_CONTAINE
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
-class AirConditionerActivity : BaseActivity<ActivityAirconditionerBinding>(), AirConditionerContract.View  {
-    override val presenter: AirConditionerPresenter by inject { parametersOf(this) }
-
+class AirConditionerActivity : BaseActivity<ActivityAirconditionerBinding>(),
+    AirConditionerContract.View {
     private val mqttManager: MqttManager by lazy {
         MqttManager(applicationContext)
+    }
+
+    override val presenter: AirConditionerPresenter by inject { parametersOf(this, mqttManager) }
+    private val containerItem by lazy {
+        val intent = intent
+        intent.getSerializableExtra(KEY_CONTAINER_DATA) as ContainerInstance
     }
 
     companion object {
@@ -35,9 +40,14 @@ class AirConditionerActivity : BaseActivity<ActivityAirconditionerBinding>(), Ai
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val intent = intent
-        val containerItem = intent.getSerializableExtra(KEY_CONTAINER_DATA) as ContainerInstance
+        binding.apply {
+            presenter.apply {
+                getChildResourceInfo()
+            }
+        }
+    }
 
+    override fun showMqttData(contentData: String) {
         binding.apply {
             sensingDataLoadingAnimationAirConditionerActivity.visibility = View.GONE
             sensingDataTextViewAirConditionerActivity.visibility = View.VISIBLE
@@ -48,20 +58,21 @@ class AirConditionerActivity : BaseActivity<ActivityAirconditionerBinding>(), Ai
             containerNameTextViewAirConditionerActivity.visibility = View.VISIBLE
             containerItemImageViewAirConditionerActivity.setImageResource(containerItem.containerImage)
 
-            presenter.apply {
-                getChildResourceInfo()
+            sensingDataTextViewAirConditionerActivity.text = contentData
+
+            if (!it.con.equals("on") && !it.con.equals("off")) {
+                sensingDataTextViewAirConditionerActivity.text = it.con
             }
         }
     }
 
-    override fun getContentData(contentData: String) {
-
-    }
-
     override fun getChildResourceInfo(responseCntUril: ResponseCntUril) {
         containerResourceName = presenter.getResourceName(responseCntUril)
-        presenter.createSubscription(containerResourceName)
-        mqttManager.getMqttClient(APP_ID, containerResourceName)
+        presenter.apply {
+            createSubscription(containerResourceName)
+            connectMqtt(containerResourceName)
+
+        }
     }
 
     override fun onStop() {
