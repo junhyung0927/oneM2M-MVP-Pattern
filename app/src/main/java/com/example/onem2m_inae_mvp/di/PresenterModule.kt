@@ -32,11 +32,11 @@ val presenterModule = module {
         AirConditionerPresenter(inAERepository = get(), view, mqttManager)
     }
 
-    factory { (view: AirPurifierContract.View) ->
-        AirPurifierPresenter(inAERepository = get(), view)
+    factory { (view: AirPurifierContract.View, mqttManager: MqttManager) ->
+        AirPurifierPresenter(inAERepository = get(), view, mqttManager)
     }
 
-    factory { (view: BoilerContract.View) ->
-        BoilerPresenter(inAERepository = get(), view)
+    factory { (view: BoilerContract.View, mqttManager: MqttManager) ->
+        BoilerPresenter(inAERepository = get(), view, mqttManager)
     }
 }

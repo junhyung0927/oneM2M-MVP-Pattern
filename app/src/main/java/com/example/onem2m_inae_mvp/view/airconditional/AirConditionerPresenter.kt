@@ -34,6 +34,17 @@ class AirConditionerPresenter(
         }
     }
 
+    override fun getContainerInfo() = launch {
+        withContext(Dispatchers.IO) {
+            handle {
+                inAERepository.getContainerInfo()
+            }?.let {
+                airConditionerView.controlContainer(it)
+            }
+        }
+    }
+
+
     override fun getResourceName(responseCntUril: ResponseCntUril): String {
         return responseCntUril.m2mUril
             .filter { it.startsWith("Mobius/IYAHN_DEMO/") }
@@ -41,6 +52,15 @@ class AirConditionerPresenter(
             .split("/").last()
     }
 
+    override fun getContentInstanceInfo(containerResourceName: String) = launch {
+        withContext(Dispatchers.IO) {
+            handle {
+                inAERepository.getContentInstanceInfo(containerResourceName)
+            }?.let {
+                println("장치 정보 가져오기")
+            }
+        }
+    }
 
     override fun createSubscription(resourceName: String) = launch {
         withContext(Dispatchers.IO) {
@@ -55,7 +75,7 @@ class AirConditionerPresenter(
     override fun connectMqtt(containerResourceName: String) {
         try {
             mqttManager.mqttConnect(APP_ID, containerResourceName).let {
-                mqttManager.mqttClient.setCallback(object: MqttCallbackExtended{
+                 mqttManager.mqttClient.setCallback(object: MqttCallbackExtended {
                     override fun connectionLost(cause: Throwable?) {
                         println("연결 lost")
                     }
@@ -89,26 +109,6 @@ class AirConditionerPresenter(
             }
         } catch (e: Exception) {
             println("mqtt 접속 에러: ${e.toString()}")
-        }
-    }
-
-    override fun getContainerInfo() = launch {
-        withContext(Dispatchers.IO) {
-            handle {
-                inAERepository.getContainerInfo()
-            }?.let {
-                airConditionerView.controlContainer(it)
-            }
-        }
-    }
-
-    override fun getContentInstanceInfo(containerResourceName: String) = launch {
-        withContext(Dispatchers.IO) {
-            handle {
-                inAERepository.getContentInstanceInfo(containerResourceName)
-            }?.let {
-                println("장치 정보 가져오기")
-            }
         }
     }
 
