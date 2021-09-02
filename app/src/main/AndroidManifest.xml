@@ -16,16 +16,16 @@
         android:supportsRtl="true"
         android:theme="@style/FullScreenTheme">
 
-        <activity android:name=".view.SplashActivity"
-            android:exported="true">
-        </activity>
-
-        <activity android:name=".view.inae.INAEActivity"
+        <activity android:name=".view.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".view.inae.INAEActivity"
+            android:exported="true">
         </activity>
 
         <activity android:name=".view.register.ContainerRegisterActivity" />

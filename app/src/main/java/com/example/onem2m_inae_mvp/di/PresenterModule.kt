@@ -12,9 +12,13 @@ import com.example.onem2m_inae_mvp.view.inae.INAEContract
 import com.example.onem2m_inae_mvp.view.inae.INAEPresenter
 import com.example.onem2m_inae_mvp.view.register.ContainerRegisterContract
 import com.example.onem2m_inae_mvp.view.register.ContainerRegisterPresenter
+import com.example.onem2m_inae_mvp.view.splash.SplashContract
+import com.example.onem2m_inae_mvp.view.splash.SplashPresenter
 import org.koin.dsl.module
 
 val presenterModule = module {
+    factory { (view: SplashContract.View) -> SplashPresenter(view) }
+
     factory { (view: INAEContract.View, model: ContainerRecyclerViewAdapter, adapterView: ContainerRecyclerViewAdapter)->
         INAEPresenter(
             inAERepository = get(),
