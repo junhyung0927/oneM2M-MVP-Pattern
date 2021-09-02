@@ -3,7 +3,7 @@ buildscript {
     ext {
         versions = [
                 kotlin_version = "1.5.21",
-                koin_version = '2.2.0',
+                koin_version = '2.2.3',
                 photoView_version = '2.3.0',
                 viewmodel_version = '2.3.1',
                 livedata_version = '2.3.1',
@@ -48,13 +48,20 @@ buildscript {
         ]
 
         koinDependencies = [
-                koin_core : "org.koin:koin-core:$koin_version",
-                koin_core_ext : "org.koin:koin-core-ext:$koin_version",
-                koin_test : "org.koin:koin-test:$koin_version",
-                koin_android : "org.koin:koin-android:$koin_version",
-                koin_android_scope : "org.koin:koin-android-scope:$koin_version",
-                koin_android_viewmodel : "org.koin:koin-android-viewmodel:$koin_version",
-                koin_android_ext : "org.koin:koin-android-ext:$koin_version"
+                koin_core : "io.insert-koin:koin-core:$koin_version",
+                koin_core_ext : "io.insert-koin:koin-core-ext:$koin_version",
+                koin_test : "io.insert-koin:koin-test:$koin_version",
+
+                koin_android : "io.insert-koin:koin-android:$koin_version",
+                koin_android_scope : "io.insert-koin:koin-android-scope:$koin_version",
+                koin_android_viewmodel : "io.insert-koin:koin-android-viewmodel:$koin_version",
+                koin_android_ext : "io.insert-koin:koin-android-ext:$koin_version",
+
+                koin_androidx : "io.insert-koin:koin-androidx-scope:$koin_version",
+                koin_androidx_viewmodel : "io.insert-koin:koin-androidx-viewmodel:$koin_version",
+                koin_androidx_fragment : "io.insert-koin:koin-androidx-fragment:$koin_version",
+                koin_androidx_workmanager : "io.insert-koin:koin-androidx-workmanager:$koin_version",
+                koin_androidx_ext : "io.insert-koin:koin-androidx-ext:$koin_version",
         ]
 
         coroutineDependencies = [
