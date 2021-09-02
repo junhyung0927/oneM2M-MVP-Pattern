@@ -52,13 +52,22 @@ class AirConditionerActivity : BaseActivity<ActivityAirconditionerBinding>(),
         }
     }
 
+    override fun showChildResourceInfo(responseCntUril: ResponseCntUril) {
+        containerResourceName = presenter.getResourceName(responseCntUril)
+        presenter.apply {
+            createSubscription(containerResourceName)
+            connectMqtt(containerResourceName)
+            getContainerInfo()
+        }
+    }
+
     override fun showMqttData(contentData: ContentInstanceMqttData) {
         binding.apply {
             sensingDataLoadingAnimationAirConditionerActivity.visibility = View.GONE
             sensingDataTextViewAirConditionerActivity.visibility = View.VISIBLE
             containerItemImageViewAirConditionerActivity.visibility = View.VISIBLE
             scrollViewAirConditionerActivity.visibility = View.VISIBLE
-            airconditionerDeleteAppCompactToggleButton.visibility = View.VISIBLE
+            airConditionerDeleteAppCompactToggleButton.visibility = View.VISIBLE
             sensingDataHintTextViewAirConditionerActivity.visibility = View.VISIBLE
             containerNameTextViewAirConditionerActivity.visibility = View.VISIBLE
             containerItemImageViewAirConditionerActivity.setImageResource(containerItem.containerImage)
@@ -70,20 +79,11 @@ class AirConditionerActivity : BaseActivity<ActivityAirconditionerBinding>(),
         }
     }
 
-    override fun showChildResourceInfo(responseCntUril: ResponseCntUril) {
-        containerResourceName = presenter.getResourceName(responseCntUril)
-        presenter.apply {
-            createSubscription(containerResourceName)
-            connectMqtt(containerResourceName)
-            getContainerInfo()
-        }
-    }
-
     override fun controlContainer(responseCnt: ResponseCnt) {
         binding.apply {
             presenter.apply {
                 if (containerResourceName.isNotEmpty()) {
-                    airconditionerControlModeAppCompactToggleButton.setOnCheckedChangeListener { _, isChecked ->
+                    airConditionerControlModeAppCompactToggleButton.setOnCheckedChangeListener { _, isChecked ->
                         val content = if (isChecked) {
                             "on"
                         } else {
@@ -92,11 +92,12 @@ class AirConditionerActivity : BaseActivity<ActivityAirconditionerBinding>(),
                         deviceControl(content, containerResourceName)
                     }
                 }
-                airconditionerSearchDataModeAppCompactButton.setOnClickListener {
+
+                airConditionerSearchDataModeAppCompactButton.setOnClickListener {
                     getContentInstanceInfo(containerResourceName)
                 }
 
-                airconditionerDeleteAppCompactToggleButton.setOnClickListener {
+                airConditionerDeleteAppCompactToggleButton.setOnClickListener {
                     deleteDatabaseContainer(containerItem.containerInstanceName)
                 }
             }
@@ -104,12 +105,12 @@ class AirConditionerActivity : BaseActivity<ActivityAirconditionerBinding>(),
 
     }
 
+    override fun showINAEActivity() {
+        startActivity(Intent(this, INAEActivity::class.java))
+    }
+
     override fun onStop() {
         mqttManager.unsubscribeToTopic(APP_ID, containerResourceName)
         super.onStop()
-    }
-
-    override fun showINAEActivity() {
-        startActivity(Intent(this, INAEActivity::class.java))
     }
 }

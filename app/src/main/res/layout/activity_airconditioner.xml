@@ -86,7 +86,7 @@
         android:scrollbars="none"
         tools:visibility="visible"
         android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toTopOf="@id/airconditioner_delete_AppCompactToggleButton"
+        app:layout_constraintBottom_toTopOf="@id/airConditioner_delete_AppCompactToggleButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sensingData_textView_AirConditionerActivity"
@@ -98,7 +98,7 @@
             android:orientation="vertical"
             >
             <androidx.appcompat.widget.AppCompatToggleButton
-                android:id="@+id/airconditioner_control_mode_AppCompactToggleButton"
+                android:id="@+id/airConditioner_control_mode_AppCompactToggleButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FAFAFA"
@@ -112,7 +112,7 @@
                 />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/airconditioner_searchData_mode_AppCompactButton"
+                android:id="@+id/airConditioner_searchData_mode_AppCompactButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ripple_custom"
@@ -126,7 +126,7 @@
                 />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/airconditioner_dehumidification_mode_AppCompactButton"
+                android:id="@+id/airConditioner_dehumidification_mode_AppCompactButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FAFAFA"
@@ -139,7 +139,7 @@
                 />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/airconditioner_power_mode_AppCompactButton"
+                android:id="@+id/airConditioner_power_mode_AppCompactButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FAFAFA"
@@ -152,7 +152,7 @@
                 />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/airconditioner_timer_mode_AppCompactButton"
+                android:id="@+id/airConditioner_timer_mode_AppCompactButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FAFAFA"
@@ -205,7 +205,7 @@
     </ScrollView>
     <androidx.appcompat.widget.AppCompatButton
         android:visibility="gone"
-        android:id="@+id/airconditioner_delete_AppCompactToggleButton"
+        android:id="@+id/airConditioner_delete_AppCompactToggleButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
