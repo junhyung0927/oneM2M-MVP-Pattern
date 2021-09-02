@@ -44,11 +44,10 @@ class AirConditionerPresenter(
         }
     }
 
-
     override fun getResourceName(responseCntUril: ResponseCntUril): String {
         return responseCntUril.m2mUril
             .filter { it.startsWith("Mobius/IYAHN_DEMO/") }
-            .find { it.contains("tvoc") }!!
+            .find { it.contains("airconditioner") }!!
             .split("/").last()
     }
 
