@@ -14,6 +14,7 @@ import com.example.onem2m_inae_mvp.view.register.ContainerRegisterContract
 import com.example.onem2m_inae_mvp.view.register.ContainerRegisterPresenter
 import com.example.onem2m_inae_mvp.view.splash.SplashContract
 import com.example.onem2m_inae_mvp.view.splash.SplashPresenter
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val presenterModule = module {
@@ -32,15 +33,15 @@ val presenterModule = module {
         ContainerRegisterPresenter(inAERepository = get() , view)
     }
 
-    factory { (view: AirConditionerContract.View, mqttManager: MqttManager) ->
-        AirConditionerPresenter(inAERepository = get(), view, mqttManager)
+    factory { (view: AirConditionerContract.View) ->
+        AirConditionerPresenter(inAERepository = get(), view, MqttManager(context = androidContext()))
     }
 
-    factory { (view: AirPurifierContract.View, mqttManager: MqttManager) ->
-        AirPurifierPresenter(inAERepository = get(), view, mqttManager)
+    factory { (view: AirPurifierContract.View) ->
+        AirPurifierPresenter(inAERepository = get(), view, MqttManager(context = androidContext()))
     }
 
-    factory { (view: BoilerContract.View, mqttManager: MqttManager) ->
-        BoilerPresenter(inAERepository = get(), view, mqttManager)
+    factory { (view: BoilerContract.View) ->
+        BoilerPresenter(inAERepository = get(), view, MqttManager(context = androidContext()))
     }
 }

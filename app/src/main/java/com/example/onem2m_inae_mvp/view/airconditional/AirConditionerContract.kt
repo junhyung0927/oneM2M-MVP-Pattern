@@ -5,6 +5,7 @@ import com.example.onem2m_in_ae.model.response.ResponseCnt
 import com.example.onem2m_in_ae.model.response.ResponseCntUril
 import com.example.onem2m_inae_mvp.base.BaseView
 import kotlinx.coroutines.Job
+import org.eclipse.paho.client.mqttv3.MqttMessage
 
 interface AirConditionerContract {
     interface View: BaseView<Presenter> {
@@ -33,5 +34,7 @@ interface AirConditionerContract {
         fun deviceControl(content: String, containerResourceName: String): Job
 
         fun deleteDatabaseContainer(containerInstanceName: String): Job
+
+        fun unsubscribeContainer(containerResourceName: String)
     }
 }

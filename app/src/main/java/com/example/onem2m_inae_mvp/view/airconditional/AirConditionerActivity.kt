@@ -21,15 +21,12 @@ import org.koin.core.parameter.parametersOf
 
 class AirConditionerActivity : BaseActivity<ActivityAirconditionerBinding>(),
     AirConditionerContract.View {
-    private val mqttManager: MqttManager by lazy {
-        MqttManager(applicationContext)
-    }
 
     companion object {
         var containerResourceName = ""
     }
 
-    override val presenter: AirConditionerPresenter by inject { parametersOf(this, mqttManager) }
+    override val presenter: AirConditionerPresenter by inject { parametersOf(this) }
 
     private val containerItem by lazy {
         val intent = intent
@@ -44,7 +41,6 @@ class AirConditionerActivity : BaseActivity<ActivityAirconditionerBinding>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         presenter.getChildResourceInfo()
     }
 
@@ -106,7 +102,7 @@ class AirConditionerActivity : BaseActivity<ActivityAirconditionerBinding>(),
     }
 
     override fun onStop() {
-        mqttManager.unsubscribeToTopic(APP_ID, containerResourceName)
+        presenter.unsubscribeContainer(containerResourceName)
         super.onStop()
     }
 }

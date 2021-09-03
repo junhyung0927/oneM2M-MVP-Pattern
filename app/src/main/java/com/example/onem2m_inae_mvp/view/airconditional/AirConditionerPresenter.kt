@@ -3,18 +3,11 @@ package com.example.onem2m_inae_mvp.view.airconditional
 import com.example.onem2m_in_ae.model.response.ResponseCntUril
 import com.example.onem2m_inae_mvp.base.BasePresenter
 import com.example.onem2m_inae_mvp.repository.INAERepository
-import com.example.onem2m_inae_mvp.service.mqtt.MqttClientRequest
-import com.example.onem2m_inae_mvp.service.mqtt.MqttClientRequestParser
 import com.example.onem2m_inae_mvp.service.mqtt.MqttManager
-import com.example.onem2m_inae_mvp.service.mqtt.MqttRepository
 import com.example.onem2m_inae_mvp.view.inae.INAEActivity.Companion.APP_ID
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
-import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
-import org.eclipse.paho.client.mqttv3.MqttException
 import org.eclipse.paho.client.mqttv3.MqttMessage
 import java.lang.Exception
 
@@ -72,42 +65,11 @@ class AirConditionerPresenter(
     }
 
     override fun connectMqtt(containerResourceName: String) {
-        try {
-            mqttManager.mqttConnect(APP_ID, containerResourceName).let {
-                 mqttManager.mqttClient.setCallback(object: MqttCallbackExtended {
-                    override fun connectionLost(cause: Throwable?) {
-                        println("연결 lost")
-                    }
-
-                    override fun messageArrived(topic: String?, message: MqttMessage?) {
-                        println("message arrived: ${message.toString()}")
-
-                        val contentData = MqttRepository().parseMessage(message)
-                        airConditionerView.showMqttData(contentData)
-
-                        val retrqi = MqttClientRequestParser().notificationJsonParse(message.toString())
-                        val responseMessage = MqttClientRequest().notificationResponse(retrqi)
-                        val res_message = MqttMessage(responseMessage.toByteArray())
-
-                        try {
-                            val resp_topic = "/oneM2M/resp/Mobius2/${APP_ID}_${containerResourceName}/json"
-                            mqttManager.mqttClient.publish(resp_topic, res_message)
-                        } catch (e: MqttException) {
-                            e.printStackTrace()
-                        }
-                    }
-
-                    override fun deliveryComplete(token: IMqttDeliveryToken?) {
-                        println("deliveryComplete: ${token}")
-                    }
-
-                    override fun connectComplete(reconnect: Boolean, serverURI: String?) {
-                        println("MQTT 연결 성공")
-                    }
-                })
+        mqttManager.apply {
+            mqttConnect(containerResourceName)
+            mqttCallBackExtend(containerResourceName) { mqttMessage ->
+                airConditionerView.showMqttData(mqttMessage)
             }
-        } catch (e: Exception) {
-            println("mqtt 접속 에러: ${e.toString()}")
         }
     }
 
@@ -132,4 +94,7 @@ class AirConditionerPresenter(
         }
     }
 
+    override fun unsubscribeContainer(containerResourceName: String) {
+        mqttManager.unsubscribeToTopic(APP_ID, containerResourceName)
+    }
 }

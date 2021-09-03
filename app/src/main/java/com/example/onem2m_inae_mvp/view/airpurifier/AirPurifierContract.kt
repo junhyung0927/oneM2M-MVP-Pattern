@@ -34,5 +34,7 @@ interface AirPurifierContract {
         fun deviceControl(content: String, containerResourceName: String): Job
 
         fun deleteDatabaseContainer(containerInstanceName: String): Job
+
+        fun unsubscribeContainer(containerResourceName: String)
     }
 }

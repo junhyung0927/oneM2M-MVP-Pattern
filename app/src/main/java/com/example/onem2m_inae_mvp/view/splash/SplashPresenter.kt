@@ -13,9 +13,8 @@ class SplashPresenter(
 ): SplashContract.Presenter, BasePresenter() {
     override fun loadingProgress() {
         CoroutineScope(Dispatchers.IO).launch {
-            delay(3000).also {
-                inSplashView.showMainPage()
-            }
+            delay(3000)
+            inSplashView.showMainPage()
         }
     }
 

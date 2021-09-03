@@ -36,6 +36,7 @@ class SplashActivity: BaseActivity<ActivitySplashBinding>(), SplashContract.View
 
     override fun showMainPage() {
         startActivity(Intent(this@SplashActivity, INAEActivity::class.java))
+        finish()
     }
 
     override fun onDestroy() {

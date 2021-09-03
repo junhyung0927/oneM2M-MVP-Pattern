@@ -71,43 +71,11 @@ class AirPurifierPresenter(
     }
 
     override fun connectMqtt(containerResourceName: String) {
-        try {
-            mqttManager.mqttConnect(APP_ID, containerResourceName).let {
-                mqttManager.mqttClient.setCallback(object: MqttCallbackExtended {
-                    override fun connectionLost(cause: Throwable?) {
-                        println("연결 lost")
-                    }
-
-                    override fun messageArrived(topic: String?, message: MqttMessage?) {
-                        println("message arrived: ${message.toString()}")
-
-                        val contentData = MqttRepository().parseMessage(message)
-                        airPurifierView.showMqttData(contentData)
-
-                        val retrqi = MqttClientRequestParser().notificationJsonParse(message.toString())
-                        val responseMessage = MqttClientRequest().notificationResponse(retrqi)
-                        val res_message = MqttMessage(responseMessage.toByteArray())
-
-                        try {
-                            val resp_topic = "/oneM2M/resp/Mobius2/${APP_ID}_${containerResourceName}/json"
-                            mqttManager.mqttClient.publish(resp_topic, res_message)
-                        } catch (e: MqttException) {
-                            e.printStackTrace()
-                        }
-                    }
-
-                    override fun deliveryComplete(token: IMqttDeliveryToken?) {
-                        println("deliveryComplete: ${token}")
-                    }
-
-                    override fun connectComplete(reconnect: Boolean, serverURI: String?) {
-                        println("MQTT 연결 성공")
-                    }
-
-                })
+        mqttManager.apply {
+            mqttConnect(containerResourceName)
+            mqttCallBackExtend(containerResourceName) { mqttMessage ->
+                airPurifierView.showMqttData(mqttMessage)
             }
-        } catch (e: Exception) {
-            println("mqtt 접속 에러: ${e.toString()}")
         }
     }
 
@@ -130,6 +98,10 @@ class AirPurifierPresenter(
                 airPurifierView.showINAEActivity()
             }
         }
+    }
+
+    override fun unsubscribeContainer(containerResourceName: String) {
+        mqttManager.unsubscribeToTopic(APP_ID, containerResourceName)
     }
 
 }
