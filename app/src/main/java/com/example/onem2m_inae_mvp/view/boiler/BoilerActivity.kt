@@ -46,11 +46,7 @@ class BoilerActivity : BaseActivity<ActivityBoilerBinding>(), BoilerContract.Vie
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.apply {
-            presenter.apply {
-                getChildResourceInfo()
-            }
-        }
+        presenter.getChildResourceInfo()
     }
 
     override fun showChildResourceInfo(responseCntUril: ResponseCntUril) {

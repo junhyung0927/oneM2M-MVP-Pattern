@@ -43,12 +43,7 @@ class AirPurifierActivity : BaseActivity<ActivityAirpurifierBinding>(), AirPurif
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding.apply {
-            presenter.apply {
-                getChildResourceInfo()
-            }
-        }
+        presenter.getChildResourceInfo()
     }
 
     override fun showChildResourceInfo(responseCntUril: ResponseCntUril) {
