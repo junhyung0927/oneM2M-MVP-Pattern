@@ -10,5 +10,5 @@ abstract class AppDatabase: RoomDatabase() {
         const val DATABASE_NAME = "AE-DATABASE"
     }
 
-    abstract fun inAEDao(): INAEDao
+    abstract fun inAEDao(): OneM2MDao
 }

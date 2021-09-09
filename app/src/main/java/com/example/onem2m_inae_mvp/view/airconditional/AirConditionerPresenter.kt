@@ -2,17 +2,15 @@ package com.example.onem2m_inae_mvp.view.airconditional
 
 import com.example.onem2m_in_ae.model.response.ResponseCntUril
 import com.example.onem2m_inae_mvp.base.BasePresenter
-import com.example.onem2m_inae_mvp.repository.INAERepository
+import com.example.onem2m_inae_mvp.repository.OneM2MRepository
 import com.example.onem2m_inae_mvp.service.mqtt.MqttManager
 import com.example.onem2m_inae_mvp.view.inae.INAEActivity.Companion.APP_ID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.eclipse.paho.client.mqttv3.MqttMessage
-import java.lang.Exception
 
 class AirConditionerPresenter(
-    private val inAERepository: INAERepository,
+    private val oneM2MRepository: OneM2MRepository,
     private val airConditionerView: AirConditionerContract.View,
     private val mqttManager: MqttManager
 ) : AirConditionerContract.Presenter, BasePresenter() {
@@ -20,7 +18,7 @@ class AirConditionerPresenter(
     override fun getChildResourceInfo() = launch {
         withContext(Dispatchers.IO) {
             handle {
-                inAERepository.getChildResourceInfo()
+                oneM2MRepository.getChildResourceInfo()
             }?.let {
                 airConditionerView.showChildResourceInfo(it)
             }
@@ -30,7 +28,7 @@ class AirConditionerPresenter(
     override fun getContainerInfo() = launch {
         withContext(Dispatchers.IO) {
             handle {
-                inAERepository.getContainerInfo()
+                oneM2MRepository.getContainerInfo()
             }?.let {
                 airConditionerView.controlContainer(it)
             }
@@ -47,7 +45,7 @@ class AirConditionerPresenter(
     override fun getContentInstanceInfo(containerResourceName: String) = launch {
         withContext(Dispatchers.IO) {
             handle {
-                inAERepository.getContentInstanceInfo(containerResourceName)
+                oneM2MRepository.getContentInstanceInfo(containerResourceName)
             }?.let {
                 println("장치 정보 가져오기")
             }
@@ -57,7 +55,7 @@ class AirConditionerPresenter(
     override fun createSubscription(resourceName: String) = launch {
         withContext(Dispatchers.IO) {
             handle {
-                inAERepository.createSubscription(resourceName)
+                oneM2MRepository.createSubscription(resourceName)
             }?.let {
                 println("subscription 생성 완료")
             }
@@ -76,7 +74,7 @@ class AirConditionerPresenter(
     override fun deviceControl(content: String, containerResourceName: String) = launch {
         withContext(Dispatchers.IO) {
             handle {
-                inAERepository.deviceControl(content, containerResourceName)
+                oneM2MRepository.deviceControl(content, containerResourceName)
             }?.let {
                 println("장치 제어 성공")
             }
@@ -86,7 +84,7 @@ class AirConditionerPresenter(
     override fun deleteDatabaseContainer(containerInstanceName: String) = launch {
         withContext(Dispatchers.IO) {
             handle {
-                inAERepository.deleteDatabaseContainer(containerInstanceName)
+                oneM2MRepository.deleteDatabaseContainer(containerInstanceName)
             }?.let {
                 println("장치 제거 성공")
                 airConditionerView.showINAEActivity()

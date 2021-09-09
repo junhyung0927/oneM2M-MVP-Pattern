@@ -11,13 +11,8 @@ import com.example.onem2m_in_ae.model.response.ResponseCntUril
 import com.example.onem2m_inae_mvp.R
 import com.example.onem2m_inae_mvp.base.BaseActivity
 import com.example.onem2m_inae_mvp.databinding.ActivityBoilerBinding
-import com.example.onem2m_inae_mvp.databinding.ActivityMainBinding
-import com.example.onem2m_inae_mvp.service.mqtt.MqttManager
-import com.example.onem2m_inae_mvp.view.airconditional.AirConditionerActivity
 import com.example.onem2m_inae_mvp.view.inae.INAEActivity
-import com.example.onem2m_inae_mvp.view.inae.INAEActivity.Companion.APP_ID
 import com.example.onem2m_inae_mvp.view.inae.INAEActivity.Companion.KEY_CONTAINER_DATA
-import com.example.onem2m_inae_mvp.view.inae.INAEPresenter
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
@@ -63,9 +58,9 @@ class BoilerActivity : BaseActivity<ActivityBoilerBinding>(), BoilerContract.Vie
             boilerDeleteAppCompactToggleButton.visibility = View.VISIBLE
             sensingDataHintTextViewBoilerActivity.visibility = View.VISIBLE
             containerNameTextViewBoilerActivity.visibility = View.VISIBLE
-            containerItemImageViewBoilerActivity.setImageResource(containerItem.containerImage)
+            containerItemImageViewBoilerActivity.setImageResource(containerItem.deviceImage)
 
-            containerNameTextViewBoilerActivity.text = containerItem.containerInstanceName
+            containerNameTextViewBoilerActivity.text = containerItem.deviceName
             if (!contentData.con.equals("on") && !contentData.con.equals("off")) {
                 sensingDataTextViewBoilerActivity.text = contentData.con
             }
@@ -91,7 +86,7 @@ class BoilerActivity : BaseActivity<ActivityBoilerBinding>(), BoilerContract.Vie
                 }
 
                 boilerDeleteAppCompactToggleButton.setOnClickListener {
-                    deleteDatabaseContainer(containerItem.containerInstanceName)
+                    deleteDatabaseContainer(containerItem.deviceName)
                 }
 
             }

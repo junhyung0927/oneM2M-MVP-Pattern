@@ -11,9 +11,7 @@ import com.example.onem2m_in_ae.model.response.ResponseCntUril
 import com.example.onem2m_inae_mvp.R
 import com.example.onem2m_inae_mvp.base.BaseActivity
 import com.example.onem2m_inae_mvp.databinding.ActivityAirconditionerBinding
-import com.example.onem2m_inae_mvp.service.mqtt.MqttManager
 import com.example.onem2m_inae_mvp.view.inae.INAEActivity
-import com.example.onem2m_inae_mvp.view.inae.INAEActivity.Companion.APP_ID
 import com.example.onem2m_inae_mvp.view.inae.INAEActivity.Companion.KEY_CONTAINER_DATA
 
 import org.koin.android.ext.android.inject
@@ -62,9 +60,9 @@ class AirConditionerActivity : BaseActivity<ActivityAirconditionerBinding>(),
             airConditionerDeleteAppCompactToggleButton.visibility = View.VISIBLE
             sensingDataHintTextViewAirConditionerActivity.visibility = View.VISIBLE
             containerNameTextViewAirConditionerActivity.visibility = View.VISIBLE
-            containerItemImageViewAirConditionerActivity.setImageResource(containerItem.containerImage)
+            containerItemImageViewAirConditionerActivity.setImageResource(containerItem.deviceImage)
 
-            containerNameTextViewAirConditionerActivity.text = containerItem.containerInstanceName
+            containerNameTextViewAirConditionerActivity.text = containerItem.deviceName
             if (!contentData.con.equals("on") && !contentData.con.equals("off")) {
                 sensingDataTextViewAirConditionerActivity.text = contentData.con
             }
@@ -90,7 +88,7 @@ class AirConditionerActivity : BaseActivity<ActivityAirconditionerBinding>(),
                 }
 
                 airConditionerDeleteAppCompactToggleButton.setOnClickListener {
-                    deleteDatabaseContainer(containerItem.containerInstanceName)
+                    deleteDatabaseContainer(containerItem.deviceName)
                 }
             }
         }

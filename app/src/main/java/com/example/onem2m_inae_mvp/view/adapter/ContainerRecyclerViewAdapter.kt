@@ -1,7 +1,6 @@
 package com.example.onem2m_inae_mvp.view.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -59,8 +58,8 @@ class ContainerRecyclerViewAdapter :
 
         fun bind(item: ContainerInstance) {
             binding.apply {
-                containerItemImageView.setImageResource(item.containerImage)
-                containerItemNameTextView.text = item.containerInstanceName
+                containerItemImageView.setImageResource(item.deviceImage)
+                containerItemNameTextView.text = item.deviceName
                 containerItemImageView.setOnClickListener {
                     listenerFunc?.invoke(item)
                 }

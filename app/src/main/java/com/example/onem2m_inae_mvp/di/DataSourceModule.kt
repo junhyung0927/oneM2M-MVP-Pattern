@@ -1,17 +1,17 @@
 package com.example.onem2m_inae_mvp.di
 
-import com.example.onem2m_inae_mvp.data.local.INAELocalDataSource
+import com.example.onem2m_inae_mvp.data.local.OneM2MLocalDataSource
 import com.example.onem2m_inae_mvp.data.local.LocalDataSource
-import com.example.onem2m_inae_mvp.data.remote.INAERemoteDataSource
+import com.example.onem2m_inae_mvp.data.remote.OneM2MRemoteDataSource
 import com.example.onem2m_inae_mvp.data.remote.RemoteDataSource
 import org.koin.dsl.module
 
 val dataSourceModule = module {
     single<RemoteDataSource> {
-        INAERemoteDataSource(inAEDataService = get())
+        OneM2MRemoteDataSource(oneM2MService = get())
     }
 
     single<LocalDataSource> {
-        INAELocalDataSource(inAEDao = get())
+        OneM2MLocalDataSource(oneM2MDao = get())
     }
 }

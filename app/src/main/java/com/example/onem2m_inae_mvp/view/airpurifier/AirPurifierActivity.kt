@@ -11,11 +11,7 @@ import com.example.onem2m_in_ae.model.response.ResponseCntUril
 import com.example.onem2m_inae_mvp.R
 import com.example.onem2m_inae_mvp.base.BaseActivity
 import com.example.onem2m_inae_mvp.databinding.ActivityAirpurifierBinding
-import com.example.onem2m_inae_mvp.databinding.ActivityMainBinding
-import com.example.onem2m_inae_mvp.service.mqtt.MqttManager
 import com.example.onem2m_inae_mvp.view.inae.INAEActivity
-import com.example.onem2m_inae_mvp.view.inae.INAEActivity.Companion.APP_ID
-import com.example.onem2m_inae_mvp.view.inae.INAEPresenter
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
@@ -60,9 +56,9 @@ class AirPurifierActivity : BaseActivity<ActivityAirpurifierBinding>(), AirPurif
             airPurifierDeleteAppCompactToggleButton.visibility = View.VISIBLE
             sensingDataHintTextViewAirPurifierActivity.visibility = View.VISIBLE
             containerNameTextViewAirPurifierActivity.visibility = View.VISIBLE
-            containerItemImageViewAirPurifierActivity.setImageResource(containerItem.containerImage)
+            containerItemImageViewAirPurifierActivity.setImageResource(containerItem.deviceImage)
 
-            containerNameTextViewAirPurifierActivity.text = containerItem.containerInstanceName
+            containerNameTextViewAirPurifierActivity.text = containerItem.deviceName
             if (!contentData.con.equals("on") && !contentData.con.equals("off")) {
                 sensingDataTextViewAirPurifierActivity.text = contentData.con
             }
@@ -89,7 +85,7 @@ class AirPurifierActivity : BaseActivity<ActivityAirpurifierBinding>(), AirPurif
                 }
 
                 airPurifierDeleteAppCompactToggleButton.setOnClickListener {
-                    deleteDatabaseContainer(containerItem.containerInstanceName)
+                    deleteDatabaseContainer(containerItem.deviceName)
                 }
 
             }

@@ -1,7 +1,7 @@
 package com.example.onem2m_inae_mvp.repository
 
 import com.example.onem2m_in_ae.model.ContainerInstance
-import com.example.onem2m_in_ae.model.ContainerType
+import com.example.onem2m_in_ae.model.DeviceType
 import com.example.onem2m_in_ae.model.request.*
 import com.example.onem2m_in_ae.model.response.ResponseAE
 import com.example.onem2m_in_ae.model.response.ResponseCin
@@ -11,18 +11,18 @@ import com.example.onem2m_inae_mvp.data.local.LocalDataSource
 import com.example.onem2m_inae_mvp.data.remote.RemoteDataSource
 import com.example.onem2m_inae_mvp.view.inae.INAEActivity.Companion.APP_ID
 
-class INAERepositoryImpl(
+class OneM2MRepositoryImpl(
     val remoteDataSource: RemoteDataSource,
     val localDataSource: LocalDataSource
-): INAERepository {
+): OneM2MRepository {
     companion object {
-        val aeResourceName = "daewon_demo123"
+       const val resourceName = "daewon_demo123"
     }
 
     override suspend fun createAE() {
         val requestAE = RequestAE(
             RequestM2mAE(
-                aeResourceName,
+                resourceName,
                 "0.2.481.2.0001.001.000111",
                 arrayListOf("key1", "key2"),
                 true
@@ -32,15 +32,15 @@ class INAERepositoryImpl(
     }
 
     override suspend fun registerContainerInstance(
-        containerName: String,
-        containerImage: Int,
-        containerType: ContainerType
+        deviceName: String,
+        deviceImage: Int,
+        deviceType: DeviceType
     ) {
         val containerInstance = listOf(
             ContainerInstance(
-                containerInstanceName = containerName,
-                containerImage = containerImage,
-                type = containerType
+                deviceName = deviceName,
+                deviceImage = deviceImage,
+                deviceType = deviceType
             )
         )
 

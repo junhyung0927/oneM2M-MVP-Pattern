@@ -1,6 +1,6 @@
 package com.example.onem2m_inae_mvp.view.register
 
-import com.example.onem2m_in_ae.model.ContainerType
+import com.example.onem2m_in_ae.model.DeviceType
 import com.example.onem2m_inae_mvp.base.BaseView
 import kotlinx.coroutines.Job
 
@@ -10,6 +10,6 @@ interface ContainerRegisterContract {
     }
 
     interface Presenter {
-        fun registerContainer(containerImage: Int, containerName: String, containerType: ContainerType): Job
+        fun registerContainer(deviceImage: Int, deviceName: String, deviceType: DeviceType): Job
     }
 }

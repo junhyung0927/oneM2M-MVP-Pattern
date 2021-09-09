@@ -22,7 +22,7 @@ val presenterModule = module {
 
     factory { (view: INAEContract.View, model: ContainerRecyclerViewAdapter, adapterView: ContainerRecyclerViewAdapter)->
         INAEPresenter(
-            inAERepository = get(),
+            oneM2MRepository = get(),
             view,
             model,
             adapterView
@@ -30,18 +30,18 @@ val presenterModule = module {
     }
 
     factory { (view: ContainerRegisterContract.View) ->
-        ContainerRegisterPresenter(inAERepository = get() , view)
+        ContainerRegisterPresenter(oneM2MRepository = get() , view)
     }
 
     factory { (view: AirConditionerContract.View) ->
-        AirConditionerPresenter(inAERepository = get(), view, MqttManager(context = androidContext()))
+        AirConditionerPresenter(oneM2MRepository = get(), view, MqttManager(context = androidContext()))
     }
 
     factory { (view: AirPurifierContract.View) ->
-        AirPurifierPresenter(inAERepository = get(), view, MqttManager(context = androidContext()))
+        AirPurifierPresenter(oneM2MRepository = get(), view, MqttManager(context = androidContext()))
     }
 
     factory { (view: BoilerContract.View) ->
-        BoilerPresenter(inAERepository = get(), view, MqttManager(context = androidContext()))
+        BoilerPresenter(oneM2MRepository = get(), view, MqttManager(context = androidContext()))
     }
 }

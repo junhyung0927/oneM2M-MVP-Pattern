@@ -2,17 +2,17 @@ package com.example.onem2m_inae_mvp.view.inae
 
 import com.example.onem2m_in_ae.model.ContainerInstance
 import com.example.onem2m_inae_mvp.base.BasePresenter
-import com.example.onem2m_inae_mvp.repository.INAERepository
+import com.example.onem2m_inae_mvp.repository.OneM2MRepository
 import com.example.onem2m_inae_mvp.view.adapter.AdapterContract
 import kotlinx.coroutines.*
 
 class INAEPresenter(
-    private val inAERepository: INAERepository,
+    private val oneM2MRepository: OneM2MRepository,
     private val inAEView: INAEContract.View,
     private val adapterModel: AdapterContract.Model,
     private val adapterView: AdapterContract.View
 ) : INAEContract.Presenter, BasePresenter() {
-    lateinit var containerInstanceList: List<ContainerInstance>
+    private var containerInstanceList: List<ContainerInstance> = listOf()
 
     init {
         adapterView.onClickFunc = {
@@ -22,13 +22,13 @@ class INAEPresenter(
 
     override fun createAE() = launch {
         withContext(Dispatchers.IO) {
-            handle { inAERepository.createAE() }
+            handle { oneM2MRepository.createAE() }
         }
     }
 
     override fun getAEInfo() = launch {
         withContext(Dispatchers.IO) {
-            handle { inAERepository.getAEInfo() }?.let {
+            handle { oneM2MRepository.getAEInfo() }?.let {
                 inAEView.getAppId(it)
             }
         }
@@ -36,7 +36,7 @@ class INAEPresenter(
 
     override fun getContainerDatabase(isClear: Boolean) = launch {
         withContext(Dispatchers.IO) {
-            handle { inAERepository.getContentInstanceDatabase() }?.let {
+            handle { oneM2MRepository.getContentInstanceDatabase() }?.let {
                 inAEView.getDatabase(it)
 
                 if (isClear) {

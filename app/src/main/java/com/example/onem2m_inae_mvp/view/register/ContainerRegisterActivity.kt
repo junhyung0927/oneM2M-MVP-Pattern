@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import com.example.onem2m_in_ae.model.ContainerType
+import com.example.onem2m_in_ae.model.DeviceType
 import com.example.onem2m_inae_mvp.R
 import com.example.onem2m_inae_mvp.base.BaseActivity
 import com.example.onem2m_inae_mvp.databinding.ActivityContainerRegisterBinding
@@ -22,11 +22,11 @@ class ContainerRegisterActivity() : BaseActivity<ActivityContainerRegisterBindin
 
     companion object {
         private var pos: Int = -1
-        private var containerImage = 0
-        private val containerType = listOf(
-            ContainerType.AIRCONDITIONAL,
-            ContainerType.AIRPURIFIER,
-            ContainerType.BOILER,
+        private var deviceImage = 0
+        private val deviceType = listOf(
+            DeviceType.AIRCONDITIONAL,
+            DeviceType.AIRPURIFIER,
+            DeviceType.BOILER,
         )
     }
 
@@ -79,8 +79,8 @@ class ContainerRegisterActivity() : BaseActivity<ActivityContainerRegisterBindin
             spinnerContainerImageSelectRegisterActivity.onItemSelectedListener =
                 object: AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
                     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, id: Long) {
-                        imageViewContainerImageRegisterActivity.setImageResource(containerType.get(position).resId)
-                        containerImage = containerType.get(position).resId
+                        imageViewContainerImageRegisterActivity.setImageResource(deviceType.get(position).resId)
+                        deviceImage = deviceType.get(position).resId
                         pos = position
                     }
 
@@ -97,9 +97,9 @@ class ContainerRegisterActivity() : BaseActivity<ActivityContainerRegisterBindin
             buttonContainerAddRegisterActivity.setOnClickListener {
                 presenter.apply {
                     registerContainer(
-                        containerImage,
+                        deviceImage,
                         binding.textInputEditContainerNameRegisterActivity.text.toString(),
-                        containerType.get(pos)
+                        deviceType.get(pos)
                     )
                 }
             }

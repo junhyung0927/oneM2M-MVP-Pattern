@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import com.example.onem2m_in_ae.model.ContainerInstance
-import com.example.onem2m_in_ae.model.ContainerType
+import com.example.onem2m_in_ae.model.DeviceType
 import com.example.onem2m_in_ae.model.response.ResponseAE
 import com.example.onem2m_inae_mvp.R
 import com.example.onem2m_inae_mvp.base.BaseActivity
@@ -74,9 +74,9 @@ class INAEActivity : BaseActivity<ActivityMainBinding>(), INAEContract.View {
     }
 
     override fun showSelectedContainerView(containerInstance: ContainerInstance) {
-        val destinationActivity = when (containerInstance.type) {
-            ContainerType.AIRCONDITIONAL -> AirConditionerActivity::class.java
-            ContainerType.AIRPURIFIER -> AirPurifierActivity::class.java
+        val destinationActivity = when (containerInstance.deviceType) {
+            DeviceType.AIRCONDITIONAL -> AirConditionerActivity::class.java
+            DeviceType.AIRPURIFIER -> AirPurifierActivity::class.java
             else -> BoilerActivity::class.java
         }
 
