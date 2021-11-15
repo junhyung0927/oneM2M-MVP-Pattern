@@ -19,7 +19,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
-//Activity만 있는 경우라도 별도의 View가 있다고 가정한다(코드 통일성)
 class INAEActivity : BaseActivity<ActivityMainBinding>(), INAEContract.View {
     override val presenter: INAEPresenter by inject { parametersOf(this, adapter, adapter) }
 
@@ -64,7 +63,6 @@ class INAEActivity : BaseActivity<ActivityMainBinding>(), INAEContract.View {
     }
 
     override fun getDatabase(containerDatabase: List<ContainerInstance>) {
-        println("테스트: ${containerDatabase}")
         if (containerDatabase.isNotEmpty()) {
             binding.apply {
                 explainTextViewINAEActivity.visibility = View.GONE

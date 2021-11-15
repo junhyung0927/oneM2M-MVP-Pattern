@@ -14,6 +14,7 @@ class AirPurifierPresenter(
     private val airPurifierView: AirPurifierContract.View,
     private val mqttManager: MqttManager
 ): AirPurifierContract.Presenter, BasePresenter() {
+
     override fun getChildResourceInfo() = launch {
         withContext(Dispatchers.IO) {
             handle {

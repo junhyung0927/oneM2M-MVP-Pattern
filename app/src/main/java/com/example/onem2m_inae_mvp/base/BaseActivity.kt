@@ -19,7 +19,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     abstract val layoutId: Int
 
-
     override fun onDestroy() {
         super.onDestroy()
         presenter.onClear()

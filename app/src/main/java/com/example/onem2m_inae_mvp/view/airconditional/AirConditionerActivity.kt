@@ -2,6 +2,7 @@ package com.example.onem2m_inae_mvp.view.airconditional
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import com.example.onem2m_in_ae.model.ContainerInstance
@@ -21,6 +22,7 @@ class AirConditionerActivity : BaseActivity<ActivityAirconditionerBinding>(),
     AirConditionerContract.View {
 
     companion object {
+        var startTime: Long = 0
         var containerResourceName = ""
     }
 
@@ -79,6 +81,7 @@ class AirConditionerActivity : BaseActivity<ActivityAirconditionerBinding>(),
                         } else {
                             "off"
                         }
+                        val startTime: Long = SystemClock.elapsedRealtime()
                         deviceControl(content, containerResourceName)
                     }
                 }

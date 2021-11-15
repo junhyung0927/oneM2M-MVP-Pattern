@@ -1,9 +1,11 @@
 package com.example.onem2m_inae_mvp.view.airconditional
 
+import android.os.SystemClock
 import com.example.onem2m_in_ae.model.response.ResponseCntUril
 import com.example.onem2m_inae_mvp.base.BasePresenter
 import com.example.onem2m_inae_mvp.repository.OneM2MRepository
 import com.example.onem2m_inae_mvp.service.mqtt.MqttManager
+import com.example.onem2m_inae_mvp.view.airconditional.AirConditionerActivity.Companion.startTime
 import com.example.onem2m_inae_mvp.view.inae.INAEActivity.Companion.APP_ID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -76,6 +78,9 @@ class AirConditionerPresenter(
             handle {
                 oneM2MRepository.deviceControl(content, containerResourceName)
             }?.let {
+                val endTime: Long = SystemClock.elapsedRealtime()
+                val interval = endTime - startTime
+                println("장치 제어 걸린 시간: $interval")
                 println("장치 제어 성공")
             }
         }
